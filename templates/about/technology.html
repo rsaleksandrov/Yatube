@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Об Технологиях
+{% endblock %}
+{% block content %}
+  <div class="container py-1">
+    <h1 class="py-2" style="text-align: center">Технологии, что помогают
+      сделать мир лучше</h1>
+    В проекте задействованы следующие технологии:
+    <div class="d-flex m-3">
+      <div>
+        <ul>
+          <li class="mb-1">
+            Python версия 3.10
+          </li>
+          <li class="mb-1">
+            HTML
+          </li>
+        </ul>
+      </div>
+      <div class="ms-3">
+        <img src="{% static 'img/lang_use.png' %}">
+      </div>
+    </div>
+    <div class="d-flex m-3">
+      <div>
+        А так же:
+      </div>
+      <div>
+        <ul>
+          <li class="mb-1">
+            Django 4.1.15
+          </li>
+          <li class="mb-1">
+            Django-tinymce 3.5.0 <em>(поддержка WYSIWYG редактора)</em>
+          </li>
+          <li class="mb-1">
+            Django-filebrowser (без grappelli) 4.0.1 <em>(загрузка файлов)</em>
+          </li>
+          <li class="mb-1">
+            Pillow 9.4.0 <em>(работа с картинками)</em>
+          </li>
+          <li class="mb-1">
+            CSS
+          </li>
+          <li class="mb-1">
+            Bootstrap
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

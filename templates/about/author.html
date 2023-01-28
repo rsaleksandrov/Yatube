@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Об авторе
+{% endblock %}
+{% block content %}
+  <div class="container py-1">
+    <h1 class="py-2" style="text-align: center">Автор сего опуса</h1>
+    <div class="d-flex justify-content-center m-3">
+      <div>
+        <img src="{% static 'img/author_logo.png' %}">
+      </div>
+      <div class="ms-3">
+        <h4>Уставшие тараканы в голове твердили: "Угомонись, вспомни
+          сколько тебе лет..."</h4>
+        <h4>А шило в попе отвечало им: "Ни фига-а-а!!!
+          &nbsp; Жизнь только начинается!!!"</h4>
+      </div>
+    </div>
+  </div>
+{% endblock %}

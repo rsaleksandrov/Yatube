@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load user_filters %}
+{% block title %}
+  Профайл пользователя {{ author|correct_username }}
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <div style="text-align: center">
+      <h1>
+        Пользователь <span class="fw-bold">{{ author|correct_username }}</span>
+        <hr style="width: 50%; margin: .5em auto;">
+      </h1>
+    </div>
+
+    <div class="d-flex justify-content-evenly">
+      <div>
+        <h3>Всего постов: {{ author.posts.count }} </h3>
+      </div>
+      <div>
+        <h3>Подписок: {{ author.follower.count }} авторов</h3>
+      </div>
+      <div>
+        <h3>Подписано: {{ author.following.count }} авторов</h3>
+      </div>
+    </div>
+
+    {% if user.is_authenticated and user != author %}
+      <div class="d-flex justify-content-end py-3">
+        {% if is_following %}
+          <a
+              class="btn btn-lg btn-light"
+              href="{% url 'posts:profile_unfollow' author.username %}"
+              role="button">
+            Отписаться от автора
+          </a>
+        {% else %}
+          <a
+              class="btn btn-lg btn-light"
+              href="{% url 'posts:profile_follow' author.username %}"
+              role="button">
+            Подписаться на автора
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="container py-2">
+      {% include 'includes/paginator.html' %}
+    </div>
+
+    {% for post in page_obj %}
+      {% include 'includes/posts/post_v3.html' with show_page='profile' %}
+      {% if not forloop.last %}
+        <hr>
+      {% endif %}
+    {% endfor %}
+
+    <div class="container py-2">
+      {% include 'includes/paginator.html' %}
+    </div>
+
+  </div>
+{% endblock %}

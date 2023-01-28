@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+  Все обновления на сайте
+{% endblock %}
+{% load cache %}
+{% cache 20 index_page %}
+  {% block content %}
+    {% load user_filters %}
+    <h1 class="py-2" style="text-align: center">Все обновления на сайте</h1>
+    {% include 'includes/posts/switcher.html' with show_page='index' %}
+    <div class="container py-2">
+      {% include 'includes/paginator.html' %}
+    </div>
+
+    <div class="container py-1">
+      {% for post in page_obj %}
+        {% include 'includes/posts/post_v3.html' with show_page='index'  %}
+        {% if not forloop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="container py-2">
+      {% include 'includes/paginator.html' %}
+    </div>
+  {% endblock %}
+{% endcache %}

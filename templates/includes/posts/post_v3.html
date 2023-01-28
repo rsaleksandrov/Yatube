@@ -1,0 +1,59 @@
+{% load user_filters %}
+<div class="card">
+  <div class="card-header yatube-card-header-bg">
+    <div class="d-flex flex-column flex-md-row flex-md-wrap">
+      <div class='p-2'>
+        {% if show_page != 'profile' %}
+          <a href="{% url 'posts:profile' post.author.get_username %}"
+             class="card-link text-decoration-none">
+            <span class="fw-bold">{{ post.author|correct_username }}</span>
+          </a>
+        {% else %}
+          <span class="fw-bold">{{ post.author|correct_username }}</span>
+        {% endif %}
+      </div>
+      {% if post.group %}
+        <div class='p-2'>
+          {% if show_page != 'group_list' %}
+            <a href="{% url 'posts:group_list' post.group.slug %}"
+               class="card-link text-decoration-none">
+              {{ post.group.title }}
+            </a>
+          {% else %}
+            {{ post.group.title }}
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="ms-auto p-2">
+        {{ post.pub_date|date:"d E Y" }}
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p>{{ post.text|correct_img_tag|safe }}</p>
+  </div>
+  <div class="card-footer yatube-card-footer-bg">
+    <div class="d-flex flex-column flex-md-row flex-md-wrap">
+      <div class='p-2'>
+        <a href="{% url 'posts:post_detail' post.id %}#comments"
+           class="text-decoration-none">
+          Комментариев: {{ post.comments.count }}
+        </a>
+      </div>
+      {% if user.is_authenticated %}
+        <div class='p-2'>
+          <a href="{% url 'posts:post_detail' post.id %}#addcomment"
+             class="card-link text-decoration-none">
+            Добавить
+          </a>
+        </div>
+      {% endif %}
+      <div class="ms-auto p-2">
+        <a href="{% url 'posts:post_detail' post.id %}"
+           class="card-link text-decoration-none">
+          Подробно
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

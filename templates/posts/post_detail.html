@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load user_filters %}
+{% block title %}
+  Пост {{ post.text|truncatechars_html:30 }}
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <aside class="col-12 col-md-3">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            Дата публикации: {{ post.pub_date|date:"d E Y" }}
+          </li>
+          {% if post.group %}
+            <li class="list-group-item">
+              Группа: {{ post.group.title }}<br>
+              <a href="{% url 'posts:group_list' post.group.slug %}">
+                все записи группы
+              </a>
+            </li>
+          {% endif %}
+          <li class="list-group-item">
+            Автор: {{ post.author|correct_username }}
+          </li>
+          <li
+              class="list-group-item d-flex justify-content-between align-items-center">
+            Всего постов автора: <span>{{ post.author.posts.count }}</span>
+          </li>
+          <li class="list-group-item">
+            <a href="{% url 'posts:profile' post.author.get_username %}">
+              все посты пользователя
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <article class="col-12 col-md-9">
+        {{ post.text|correct_img_tag|safe }}
+        {% if post.author == user %}
+          <div class="py-2">
+            <a class="btn btn-primary"
+               href="{% url 'posts:post_edit' post.id %}">
+              Редактировать запись
+            </a>
+          </div>
+        {% endif %}
+      </article>
+    </div>
+  </div>
+  <a id="addcomment" href="#"></a>
+  <comment>
+    <hr>
+    <div class="container">
+      <h3>Комментарии</h3>
+      {% if user.is_authenticated %}
+        <div class="card my-4">
+          <h5 class="card-header yatube-card-header-bg fw-bold">Добавить
+            комментарий:</h5>
+          <div class="card-body">
+            <form method="post" action="{% url 'posts:add_comment' post.id %}">
+              {% csrf_token %}
+              <div class="form-group mb-2">
+                {% include 'includes/show_form_fields.html' %}
+              </div>
+              <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+          </div>
+        </div>
+      {% else %}
+        <p class="text-secondary bg-info">
+          Оставлять комментарии могут только зарегистрированные пользователи
+        </p>
+      {% endif %}
+      <a id="comments" href="#"></a>
+      <div class="text-center mt-4 mb-2">
+        <h3>Комментарии пользователей (всего: {{ comments.count }})</h3>
+      </div>
+      {% for comment in comments %}
+        <div class="card">
+          <div class="card-header yatube-card-header-bg fw-bold">
+            <div class="d-flex">
+              <a href="{% url 'posts:profile' comment.author.username %}"
+                 class="card-link text-decoration-none">
+                {{ comment.author|correct_username }}
+              </a>
+              <span class="ms-auto">
+                {{ comment.created|date:"d E Y" }}
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            {{ comment.text|safe }}
+          </div>
+        </div>
+        {% if not forloop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </comment>
+  <div class="mb-5"></div>
+{% endblock %}

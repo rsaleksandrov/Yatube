@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+  Сообщения авторов, на которых Вы подписаны
+{% endblock %}
+{% load cache %}
+{% cache 20 index_page %}
+  {% block content %}
+    {% load user_filters %}
+    <h1 class="py-2" style="text-align: center">
+      Сообщения авторов, на которых Вы подписаны
+    </h1>
+    {% include 'includes/posts/switcher.html' with show_page='follow' %}
+    <div class="container py-2">
+      {% include 'includes/paginator.html' %}
+    </div>
+
+    <div class="container py-1">
+
+      {% for post in page_obj %}
+        {% include 'includes/posts/post_v3.html' with show_page='follow' %}
+        {% if not forloop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="container py-2">
+      {% include 'includes/paginator.html' %}
+    </div>
+  {% endblock %}
+{% endcache %}

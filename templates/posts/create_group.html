@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+  {% if is_edit %}
+    Редактировать запись
+  {% else %}
+    Добавить запись
+  {% endif %}
+{% endblock %}
+{% block content %}
+  <div class="container py-5">
+
+    <div class="card">
+      <div class="card-header yatube-card-header-bg">
+        <span class="fw-bold">
+        {% if is_edit %}
+          Редактировать группу
+        {% else %}
+          Новая группа
+        {% endif %}
+        </span>
+      </div>
+      <div class="card-body">
+        {% include 'includes/show_form_error.html' %}
+
+        <form
+            method="post"
+            action="{{ request.path }}"
+            enctype="multipart/form-data">
+          {% csrf_token %}
+
+          {% include 'includes/show_form_fields.html' %}
+
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">
+              {% if is_edit %}
+                Сохранить группу
+              {% else %}
+                Добавить группу
+              {% endif %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% comment %}
+Отрисовываем навигацию паджинатора только если
+все посты не помещаются на первую страницу
+{% endcomment %}
+{% load static %}
+{% if page_obj.has_other_pages %}
+  <nav aria-label="Page navigation" class="my-5">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1">
+            <img src="{% static 'img/first_page.svg' %}"
+                 width="18"
+                 height="18"
+                 alt="Первая">
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link"
+             href="?page={{ page_obj.previous_page_number }}">
+            <img src="{% static 'img/chevron_left.svg' %}"
+                 width="18"
+                 height="18"
+                 alt="Предыдущая">
+          </a>
+        </li>
+      {% endif %}
+      {% for i in page_obj.paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li class="page-item yatube-page-link-bg active">
+            <span class="page-link">{{ i }}</span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+            <img src="{% static 'img/chevron_right.svg' %}"
+                 width="18"
+                 height="18"
+                 alt="Следующая">
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+            <img src="{% static 'img/last_page.svg' %}"
+                 width="18"
+                 height="18"
+                 alt="Последняя">
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
