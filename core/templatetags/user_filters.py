@@ -23,3 +23,11 @@ def correct_img_tag(value):
         value = value.replace('<img ', '<img class="img-thumbnail" ')
 
     return value
+
+
+@register.filter
+def correct_video_tag(value):
+    if isinstance(value, str):
+        value = value.replace('<video ', '<video class="img-thumbnail" ')
+
+    return value

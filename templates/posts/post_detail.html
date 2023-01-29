@@ -34,7 +34,7 @@
         </ul>
       </aside>
       <article class="col-12 col-md-9">
-        {{ post.text|correct_img_tag|safe }}
+        {{ post.text|correct_img_tag|correct_video_tag|safe }}
         {% if post.author == user %}
           <div class="py-2">
             <a class="btn btn-primary"
@@ -88,7 +88,7 @@
             </div>
           </div>
           <div class="card-body">
-            {{ comment.text|safe }}
+            {{ comment.text|correct_img_tag|correct_video_tag|safe }}
           </div>
         </div>
         {% if not forloop.last %}

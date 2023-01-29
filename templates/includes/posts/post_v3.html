@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="card-body">
-    <p>{{ post.text|correct_img_tag|safe }}</p>
+    <p>{{ post.text|correct_img_tag|correct_video_tag|safe }}</p>
   </div>
   <div class="card-footer yatube-card-footer-bg">
     <div class="d-flex flex-column flex-md-row flex-md-wrap">
